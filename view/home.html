@@ -1,0 +1,23 @@
+<div class="cards card-deck" ng-repeat="product in products | orderBy:sortColumn | filter: searchText | limitTo:rowLimits">
+    <img class="card-img-top imageid" src="../image/card.png" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title1">{{ product.productname }}
+             {{product.authour }}</h5>
+        <h6 class="card-category"> {{ product.category }}</h6>
+        <p class="card-text orange content">{{ product.price}} SEK
+            <div class="stars stars-outer">
+                <div class="stars-inner" ng-style="{ 'width': rating(product.rating) }"></div>
+            </div>
+            <span class="number-rating"></span>
+        </p>
+        <button class="btn-success add " ng-click="addItem(product)">Lägg till</button>
+    </div>
+
+</div>
+
+<style>
+    .showing-opt .squares {
+        background-color: #ff8155;
+        color: #ffffff;
+    }
+</style>

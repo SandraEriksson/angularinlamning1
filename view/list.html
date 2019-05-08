@@ -1,0 +1,40 @@
+<div> 
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Produkt</th>
+        <th scope="col">Författare</th>
+        <th scope="col">Kategori</th>
+        <th scope="col">Pris</th>
+        <th scope="col">Omdöme</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="product in products | orderBy:sortColumn | filter: searchText | limitTo:rowLimits">
+      <tr>
+        <th scope="row"></th>
+        <td><img class="list-image" src="../image/card.png" alt="Card image cap"></td>
+        <td>{{ product.productname }}</td>
+        <td>{{ product.authour }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price}} SEK</td>
+          <td>
+              <div class="stars-outer">
+                  <div class="stars-inner" ng-style="{ 'width': rating(product.rating) }"></div>
+              </div>
+              <span class="number-rating"></span>
+          </td>
+          <td><button class="add btn-success" ng-click="addItem(product)">Lägg till</button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <style>
+    .showing-opt .bars {
+        background-color: #ff8155;
+        color: #ffffff;
+    }
+    </style>

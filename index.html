@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Document</title>
+</head>
+
+<body ng-app="sortApp">
+    <div class="container">
+
+        <!--Navbar start-->
+        <div class="navbar">
+            <div class="navbar-icons">
+                <i class="fab fa-facebook-f white media "></i>
+                <i class="fab fa-twitter white media"></i>
+                <i class="fab fa-behance white media"></i>
+                <i class="fab fa-pinterest white media"></i>
+                <i class="fab fa-youtube white media"></i>
+
+
+                <a class="link" href="#">FAQ</a>
+                <a class="links" href="#">TERMS<a>
+            </div>
+
+            <div class="navbar-mail">
+                <i class="far fa-envelope white mail-icon"></i> info@webmail.com
+            </div>
+            <div class="registration">
+
+                <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true" ng-controller="registerController">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                    <i class="fas fa-envelope prefix grey-text"></i>
+                                    <input type="email" id="defaultForm-email" class="form-control validate" ng-model="login.email">
+                                    <label data-error="wrong" data-success="right" for="defaultForm-email">Your
+                                        email</label>
+                                </div>
+
+                                <div class="md-form mb-4">
+                                    <i class="fas fa-lock prefix grey-text"></i>
+                                    <input type="password" id="defaultForm-pass" class="form-control validate" ng-model="login.password">
+                                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your
+                                        password</label>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-info btn-lg btn-block form-btn" ng-click="login(login.email, login.password)">Sign in</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center" >
+                    <a ng-hide="loggedIn" ng-controller="registerController" href="" class="btn btn-default btn-rounded login-btn" data-toggle="modal"
+                        data-target="#modalLoginForm">Sign in</a>
+                    
+                    <a ng-hide="!loggedIn" ng-controller="registerController" class="yourpage" href="#!yourpage">Welcome!</a>
+
+                </div>
+
+                <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="registerController">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                    <i class="fas fa-user prefix grey-text"></i>
+                                    <input type="text" id="orangeForm-firstName" ng-model="register.firstName"
+                                        class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="orangeForm-name">Your
+                                        first name</label>
+                                </div>
+                                <div class="md-form mb-5">
+                                    <i class="fas fa-user prefix grey-text"></i>
+                                    <input type="text" id="orangeForm-lastName" ng-model="register.lastName"
+                                        class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="orangeForm-name">Your
+                                        last name</label>
+                                </div>
+                                <div class="md-form mb-5">
+                                    <i class="fas fa-envelope prefix grey-text"></i>
+                                    <input type="email" id="orangeForm-email" ng-model="register.email"
+                                        class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="orangeForm-email">Your
+                                        email</label>
+                                </div>
+
+                                <div class="md-form mb-4">
+                                    <i class="fas fa-lock prefix grey-text"></i>
+                                    <input type="password" id="orangeForm-pass" ng-model="register.password"
+                                        class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="orangeForm-pass">Your
+                                        password</label>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button ng-click="submitRegistration(register.firstName, register.lastName, register.email, register.password)"
+                                    class="btn btn-info btn-block form-btn">Sign up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a ng-hide="loggedIn" ng-controller="registerController" href="" class="btn btn-default btn-rounded reg-btn" data-toggle="modal"
+                        data-target="#modalRegisterForm">Sign up</a>
+                </div>
+
+                <ul class="navbar-nav mr-2">
+                    <li class="nav-item dropdown basket-container">
+                        <a class="nav-link" href="#!cart" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-shopping-basket basket"></i><span class="badge badge-pill"
+                                ng-class="badgeColor"
+                                style="font-size:14px; font-weight:normal; position: absolute; top:10px; left:30px">{{ getQuantity() }}</span>
+                        </a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+
+
+        </div>
+        <!--Navbar end-->
+
+
+        <!--header start-->
+        <header>
+            <a href="#/!"><img class="logo-header" src="image/logo.png" alt="Pohat."></a>
+
+            <div class="dropdown dropdown-lan">
+                <button class="btn btn-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    EN
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">SE</a>
+                </div>
+            </div>
+
+            <div class="phonenumber">
+                <a href="#">+90878 87 878 7</a>
+            </div>
+
+            <ul class="menu-opt">
+                <li><a href="#">Home</a></li>
+                <a href="#">
+                    <li>About</li>
+                </a>
+                <a href="#">
+                    <li>Services</li>
+                </a>
+                <a href="#">
+                    <li>Pages</li>
+                </a>
+                <a href="#">
+                    <li>News</li>
+                </a>
+                <a href="#">
+                    <li>Contact</li>
+                </a>
+            </ul>
+
+            <div class="get-quote">
+                <li><a href="#">GET A QUOTE</a></li>
+            </div>
+        </header>
+        <!--header end-->
+        <!--slideshow start-->
+        <div class="slide-show">
+
+            <div class="card bg-light text-white">
+                <img class="slideshow-bg" src="image/slideshow.jpg" alt="">
+                <div class="card-img-overlay">
+                    <p class="card-text">DIGITAL MARKETING</p>
+                    <h5 class="card-title">Product Store</h5>
+                    <a href="#">
+                        <p class="card-text">Home | Shop</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--slideshow end-->
+
+        <!--main content start-->
+        <div class="container-maincontent">
+
+            <!--ORDER SPEC START-->
+            <div class="container-orderspec">
+                <div class="order-spec">
+                    <div class="shipping">
+                        <i class="fas fa-shipping-fast orange"></i>
+                        <h3>Free Shipping</h3>
+                        <p>Orders over $100</p>
+                    </div>
+                    <div class="return">
+                        <i class="fas fa-stopwatch orange"></i>
+                        <h3>Free Return</h3>
+                        <p>In 30 days</p>
+                    </div>
+                    <div class="secure">
+                        <i class="fas fa-lock orange"></i>
+                        <h3>100% Secure</h3>
+                        <p>Shipping</p>
+                    </div>
+                    <div class="best-price">
+                        <i class="fas fa-tag orange"></i>
+                        <h3>Best Price</h3>
+                        <p>Granted</p>
+                    </div>
+                </div>
+            </div>
+            <!--ORDER SPEC END-->
+
+            <!--showing opt start-->
+
+            <div class="showing-opt">
+                <a href="#/!"><button type="button" class="btn squares"><i class="fas fa-th"></i></button></a>
+                <a href="#!list"><button type="button" class="btn bars"><i class="fas fa-bars"></i></button></a>
+
+
+
+                <select ng-model="rowLimits" class="filterby">
+
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+
+
+
+                <div>
+                    <select ng-model="sortColumn" id="sortby">
+                        <option value="productname">Produkt</option>
+                        <option value="category">Kategori</option>
+                        <option value="price">Pris</option>
+                    </select>
+                </div>
+
+                <div class="searchby form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Search from here...." ng-model="searchText">
+                </div>
+            </div>
+
+            <!--SHOWING OPT END-->
+
+
+            <!--CARDS START-->
+            <div ng-view>
+
+            </div>
+
+
+            <!--CARDS END-->
+        </div>
+
+        <div class="card-nav">
+            <button type="button" class="btn"><i class="fas fa-arrow-left"></i></button>
+            <button type="button" class="btn active">01</button>
+            <button type="button" class="btn">02</button>
+            <button type="button" class="btn">03</button>
+            <button type="button" class="btn">...</button>
+            <button type="button" class="btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+
+        <!--main content end-->
+
+        <!--footer start-->
+        <footer>
+            <img class="footer-bg" src="image/footer.jpg" alt="">
+            <div class="footer-container">
+                <a href="test.html"> <img class="logo-footer" src="image/footer-logo.png" alt=""></a>
+                <p class="logo-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum veniam iusto
+                    excepturi sunt earum dicta fuga asperiores delectus sequi accusantium optio quos, quasi velit
+                    doloremque amet facilis laboriosam quibusdam commodi?</p>
+                <div class="icon-footer">
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook-f footer-icon"></i></a>
+                    <a href="https://www.twitter.com/"><i class="fab fa-twitter footer-icon active"></i></a>
+                    <a href="https://www.behance.net/"><i class="fab fa-behance footer-icon"></i></a>
+                    <a href="https://www.pinterest.com/"><i class="fab fa-pinterest footer-icon"></i></a>
+                    <a href="https://www.youtube.com/"><i class="fab fa-youtube footer-icon"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>Copyright by &copy;<span class="orange">NilArtStudio-</span>2019</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>More Links<span class="orange">.</span></h3>
+                    <ul class="links-row1">
+                        <a href="#">
+                            <li class="first">Paid SEO</li>
+                        </a>
+                        <a href="#">
+                            <li class="first">Digital Marketing</li>
+                        </a>
+                        <a href="#">
+                            <li class="first">Strategy Planning</li>
+                        </a>
+                        <a href="#">
+                            <li class="first">Offline SEO</li>
+                        </a>
+                        <a href="#">
+                            <li class="first">Page Rank Up</li>
+                        </a>
+                        <a href="#">
+                            <li class="first">User Panel</li>
+                        </a>
+                    </ul>
+                    <ul class="links-row2">
+                        <a href="#">
+                            <li class="second">Services</li>
+                        </a>
+                        <a href="#">
+                            <li class="second">Out Team</li>
+                        </a>
+                        <a href="#">
+                            <li class="second">News</li>
+                        </a>
+                        <a href="#">
+                            <li class="second">Shop</li>
+                        </a>
+                        <a href="#">
+                            <li class="second">Contact Us</li>
+                        </a>
+                        <a href="#">
+                            <li class="second">Book Appointment</li>
+                        </a>
+                    </ul>
+                </div>
+                <div class="news-feed">
+                    <h3>News Feed<span class="orange">.</span></h3>
+                    <div class="news-feed-container">
+
+                        <div class="square-container">
+                            <div class="footer-square1"></div>
+                            <h5 class="card-title footer-header square-text1">Lorem ipsum dolor sit amet consectetur.
+                            </h5>
+                            <p class="card-text footer-text1">14 July 2019</p>
+                        </div>
+
+                        <div class="square-container">
+                            <div class="footer-square2"></div>
+                            <h5 class="card-title footer-header square-text2">Lorem ipsum dolor sit amet consectetur.
+                            </h5>
+                            <p class="card-text footer-text2">14 July 2019</p>
+                        </div>
+
+                        <div class="square-container">
+                            <div class="footer-square3"></div>
+                            <div class="square-container-text">
+                                <h5 class="card-title footer-header square-text3">Lorem ipsum dolor sit amet
+                                    consectetur.</h5>
+                                <p class="card-text footer-text3">14 July 2019</p>
+                            </div>
+                        </div>
+
+                        <div class="button-footer">
+                            <button type="button" class="btn btn-primary button-style">BACK TO TOP</button>
+                        </div>
+
+                    </div>
+
+                </div>
+        </footer>
+
+        <!--footer end-->
+
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="restapi/app.js"></script>
+
+
+</body>
+
+</html>
